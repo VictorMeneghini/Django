@@ -1,0 +1,8 @@
+[run]
+source =
+    ./mysite/polls
+omit =
+    ./local
+
+[report]
+fail_under = 90

@@ -7,6 +7,9 @@ name = "pypi"
 django = "==2.0"
 
 [dev-packages]
+"flake8" = "*"
+pytest = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.6"
