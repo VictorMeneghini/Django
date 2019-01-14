@@ -1,0 +1,25 @@
+<h1>Login</h1>
+{% if user.is_authenticated %}
+<h3>Hi, {{user}}, how are u today?</h3>
+<form action="{% url 'authentication:logout_user'%}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="logout">
+</form>
+{% else %}
+<form action="{% url 'authentication:login_user'%}" method="post">
+    {% csrf_token %}
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <input type="submit" value="login">
+</form>
+{% endif %}
+
+<h1>Create account</h1>
+
+<form action="{% url 'authentication:signin_user'%}" method="post">
+    {% csrf_token %}
+    <input type="text" name="username">
+    <input type="email" name="email">
+    <input type="password" name="password">
+    <input type="submit" value="login">
+</form>
