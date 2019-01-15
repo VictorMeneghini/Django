@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/movie_description.css' %}">
+
+
+<div class="wrapper">
+    <img src="{{movie.Poster}}" alt="">
+    <h1>{{movie.Title}}</h1>
+    <h3>{{movie.Year}}</h3>
+    <p>{{movie.Plot}}</p>
+
+    {% if error.Error %}
+    <div>
+        <h1>{{error.Error}}</h1>
+        <img src="https://media.giphy.com/media/QZB0rrcGLljpu/giphy.gif" alt="">
+    </div>
+    {% endif %}
+</div>
