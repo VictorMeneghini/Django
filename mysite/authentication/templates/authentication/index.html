@@ -1,25 +1,39 @@
-<h1>Login</h1>
-{% if user.is_authenticated %}
-<h3>Hi, {{user}}, how are u today?</h3>
-<form action="{% url 'authentication:logout_user'%}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="logout">
-</form>
-{% else %}
-<form action="{% url 'authentication:login_user'%}" method="post">
-    {% csrf_token %}
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit" value="login">
-</form>
-{% endif %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/index.css' %}">
 
-<h1>Create account</h1>
-
-<form action="{% url 'authentication:signin_user'%}" method="post">
-    {% csrf_token %}
-    <input type="text" name="username">
-    <input type="email" name="email">
-    <input type="password" name="password">
-    <input type="submit" value="login">
-</form>
+<div class="wrapper fadeInDown">
+    {% if not user.is_authenticated %}
+    <div id="formContent">
+        <h2 class="active"> Log In </h2>
+        <div class="fadeIn first">
+            <img src="http://www.killthehydra.com/wp-content/uploads/walter-white-gang-signs.jpg" id="icon" alt="User Icon" />
+        </div>
+        <form action="{% url 'authentication:login_user' %}" method="post">
+        {% csrf_token %}
+            <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input type="submit" class="fadeIn fourth"value="login">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" href="{% url 'authentication:logout_user' %}">Create Account</a>
+        </div>
+    </div>
+    {% else %}
+    <div id="formContent">
+        <h2 class="active"> Create Account </h2>
+        <div class="fadeIn first">
+            <img src="http://www.killthehydra.com/wp-content/uploads/walter-white-gang-signs.jpg" id="icon" alt="User Icon" />
+        </div>
+        <form action="{% url 'authentication:signin_user' %}" method="post">
+        {% csrf_token %}
+            <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+            <input type="email" id="email" class="fadeIn third" name="email" placeholder="email">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input type="submit" class="fadeIn fourth"value="login">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" href="#">Forgot Password?</a>
+        </div>
+    </div>
+    {% endif %}
+</div>

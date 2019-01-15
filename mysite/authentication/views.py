@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, 'authentication/index.html')
+    if request.user.is_authenticated:
+        return render(request, 'movies/index.html')
+    else:
+        return render(request, 'authentication/index.html')
 
 
 def login_user(request):
@@ -15,7 +18,7 @@ def login_user(request):
     print(user)
     if user:
         login(request, user)
-        return render(request, 'authentication/welcome.html')
+        return redirect('movies:index')
     else:
         return render(request, 'authentication/index.html')
 
@@ -34,7 +37,7 @@ def signin_user(request):
         password
     )
     user.save()
-    return render(request, 'authentication/index.html')
+    return redirect('movies:index')
 
 
 def logout_user(request):
