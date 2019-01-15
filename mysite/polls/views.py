@@ -3,12 +3,10 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
 
 from .models import Question, Choice
 
 
-@login_required
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
