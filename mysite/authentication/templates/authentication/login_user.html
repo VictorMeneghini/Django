@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/index.css' %}">
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Log In </h2>
+        {% if erro %}<p><strong style="color:red">{{ erro }}</strong></p>{% endif %}
+        <div class="fadeIn first">
+            <img src="{% static "authentication/walter.jpg" %}" id="icon" alt="User Icon" />
+        </div>
+        <form action="{% url 'authentication:login_user' %}" method="post">
+        {% csrf_token %}
+            {{ form.username }}
+            {{ form.password }}
+            <input type="submit" class="fadeIn fourth"value="login">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" href="{% url 'authentication:signin_user' %}">Create Account</a>
+        </div>
+    </div>
+</div>

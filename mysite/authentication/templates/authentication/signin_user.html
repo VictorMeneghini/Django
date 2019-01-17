@@ -1,1 +1,27 @@
-<h1>hi</h1>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'authentication/index.css' %}">
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <h2 class="active"> Create Account </h2>
+        <div class="fadeIn first">
+            <img src="{% static "authentication/walter.jpg" %}" id="icon" alt="User Icon" />
+        </div>
+        <form action="{% url 'authentication:signin_user' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            {% comment %} <input type="text" id="login" class="fadeIn second" name="username" placeholder="login">
+            <input type="email" id="email" class="fadeIn third" name="email" placeholder="email">
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+            <input type="file" name="avatar" accept="image/*"> {% endcomment %}
+            {{ form.username }}
+            {{ form.email }}
+            {{ form.password }}
+            <strong>Choose your avata image</strong>
+            {{ form.file }}
+            <input type="submit" class="fadeIn fourth"value="login">
+        </form>
+        <div id="formFooter">
+            <a class="underlineHover" href="{% url 'authentication:login_user' %}">Login Account</a>
+        </div>
+    </div>
+</div>
