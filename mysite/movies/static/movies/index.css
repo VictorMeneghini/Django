@@ -361,7 +361,9 @@
     background-color: #f6f4f3;
 }
 
-.search-wrapper {   
+.search-wrapper {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -441,4 +443,11 @@ button { border:none; }
 
 .welcome-user {
   margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar{ 
+  border-radius: 50%;
 }

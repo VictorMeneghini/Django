@@ -1,10 +1,13 @@
 from django.shortcuts import render
 import requests
+from .models import UserProfile
+from django.contrib.auth.models import User
 
 
 def index(request):
     if request.user.is_authenticated:
-        return render(request, 'movies/index.html')
+        profile = UserProfile.objects.get(user_id = request.user.id)
+        return render(request, 'movies/index.html', {'profile': profile})
     else:
         return render(request, 'authentication/index.html')
 
