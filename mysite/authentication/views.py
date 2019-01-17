@@ -1,45 +1,61 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from movies.models import UserProfile
+from django.http import HttpResponseRedirect
 
-
-def index(request):
-    if request.user.is_authenticated:
-        return render(request, 'movies/index.html')
-    else:
-        return render(request, 'authentication/index.html')
+from .forms import AuthUser, SigninUser
 
 
 def login_user(request):
-    print(request.POST)
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = authenticate(request, username=username, password=password)
-    print(user)
-    if user:
-        login(request, user)
+    if request.user.is_authenticated:
         return redirect('movies:index')
-    else:
-        return render(request, 'authentication/index.html')
+    else: 
+        if request.method == 'POST':
+            form = AuthUser(request.POST)
 
-
-def welcome(request):
-    return render(request, 'authentication/welcome.html')
+            if form.is_valid():
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                user = authenticate(request, username=username, password=password)
+                if user:
+                    login(request, user)
+                    return redirect('movies:index')
+                else:
+                    return render(request, 'authentication/login_user.html', {'form': form, 'erro': "User Invalid"})  
+        else:
+            form = AuthUser()
+            return render(request, 'authentication/login_user.html', {'form': form}) 
 
 
 def signin_user(request):
-    username = request.POST.get('username')
-    email = request.POST.get('email')
-    password = request.POST.get('password')
-    user = User.objects.create_user(
-        username,
-        email,
-        password
-    )
-    user.save()
-    return redirect('movies:index')
+    if request.user.is_authenticated:
+        return redirect('movies:index')
+    else:
+        if request.method == 'POST':
+            form = SigninUser(request.POST, request.FILES)
 
+            if form.is_valid():
+                username = request.POST.get('username')
+                email = request.POST.get('email')
+                password = request.POST.get('password')
+                user = User.objects.create_user(
+                    username,
+                    email,
+                    password
+                )
+                user.save()
+                user_profile = UserProfile(user=user, avatar=request.FILES.get('file'))
+                user_profile.save()
+                return redirect('movies:index')
+            else:
+                print('invalid form')
+                form = SigninUser()
+                return render(request, 'authentication/signin_user.html', {'form': form})    
+        else:
+            form = SigninUser()
+            return render(request, 'authentication/signin_user.html', {'form': form})
 
 def logout_user(request):
     logout(request)
-    return render(request, 'authentication/index.html')
+    return redirect('authentication:login_user')
