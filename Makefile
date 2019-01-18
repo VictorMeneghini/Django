@@ -18,4 +18,7 @@ migrate:
 migration:
 	python3 ./mysite/manage.py makemigrations
 
+super:
+	python3 ./mysite/manage.py createsuperuser
+
 

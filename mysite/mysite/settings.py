@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'authentication.User'
+
 INSTALLED_APPS = [
     'movies.apps.MoviesConfig',
     'polls.apps.PollsConfig',
