@@ -42,13 +42,14 @@ def signin_user(request):
                 avatar = request.FILES.get('file')
                 userd = User
                 print(userd)
-                user = User.objects.create(
+                User.objects.create_user(
                     username,
                     email,
                     password,
-                    avatar
+                    **{
+                        'avatar': avatar
+                    },
                 )
-                user.save()
                 # user_profile = UserProfile(
                 #     user=user, avatar=request.FILES.get('file'))
                 # user_profile.save()
