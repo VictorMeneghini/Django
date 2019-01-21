@@ -10,7 +10,7 @@
         </div>
         <form action="{% url 'authentication:login_user' %}" method="post">
         {% csrf_token %}
-            {{ form.username }}
+            {{ form.email }}
             {{ form.password }}
             <input type="submit" class="fadeIn fourth"value="login">
         </form>
