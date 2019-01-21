@@ -7,11 +7,17 @@
     <h1>{{movie.Title}}</h1>
     <h3>{{movie.Year}}</h3>
     <p>{{movie.Plot}}</p>
-    
-    <form action="{% url 'movies:add_favorite'%}" method="POST">
+    {% if there_is_movie %}
+    <form action="{% url 'movies:remove_favorite' movie.Title %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Remove Movie">
+    </form>
+    {% else %}
+    <form action="{% url 'movies:add_favorite' movie.Title %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="Add Favorite">
     </form>
+    {% endif %}
 
     {% if error.Error %}
     <div>

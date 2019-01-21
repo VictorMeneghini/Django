@@ -5,6 +5,11 @@
 <div class="index">
         <p><a href="{% url 'authentication:logout_user' %}">logout</a></p>
    <div class="search-wrapper">
+        <ul>
+            {% for movies in user.movies.all %}
+                <li>{{ movies }} || <a href="{% url 'movies:remove_favorite' movies %}">Remove</a></li>
+            {% endfor %}
+        </ul>
         <div class="welcome-user">
             <img class="avatar" src="/media/{{user.avatar}}" width="200px">
             <h2>Welcome, {{user.email}} Choose a movie</h2>
@@ -13,7 +18,7 @@
             {% csrf_token %}
             <input type="search" name="search">
             <button type="submit">
-                    <i class="fa fa-search"></i>
+                <i class="fa fa-search"></i>
             </button>
         </form>
    </div>

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 import requests
+
+
 from .models import Movie
 
 
@@ -27,16 +29,25 @@ def search_movie(request):
                 'language': r.get('Language', 'No Language')
             }
         Movie.objects.get_or_create(**movie_object)
+        there_is_movie = request.user.movies.filter(title=r.get('Title'))
 
     return render(request,
                   'movies/movie_description.html',
                   {
                       'movie': r,
-                      'error': r
+                      'error': r,
+                      'there_is_movie': there_is_movie
                   }
                   )
 
 
-def add_favorite(request):
-    print(request)
+def add_favorite(request, movie_title):
+    movie = Movie.objects.get(title=movie_title)
+    request.user.movies.add(movie)
+    return redirect('movies:index')
+
+
+def remove_favorite(request, movie_title):
+    movie = Movie.objects.get(title=movie_title)
+    request.user.movies.remove(movie)
     return redirect('movies:index')
