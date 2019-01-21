@@ -7,7 +7,7 @@
    <div class="search-wrapper">
         <div class="welcome-user">
             <img class="avatar" src="/media/{{user.avatar}}" width="200px">
-            <h2>Welcome, {{user}} Choose a movie</h2>
+            <h2>Welcome, {{user.email}} Choose a movie</h2>
         </div>
         <form action="{% url 'movies:search_movie'%}" method="POST">
             {% csrf_token %}
